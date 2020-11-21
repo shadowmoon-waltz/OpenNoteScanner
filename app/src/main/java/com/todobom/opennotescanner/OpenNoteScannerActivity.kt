@@ -301,6 +301,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         mHideHandler.postDelayed(mHideRunnable, delayMillis.toLong())
     }
 
+    /*
     private val mLoaderCallback: BaseLoaderCallback = object : BaseLoaderCallback(this) {
         override fun onManagerConnected(status: Int) {
             when (status) {
@@ -314,6 +315,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             }
         }
     }
+    */
 
     public override fun onResume() {
         super.onResume()
@@ -328,7 +330,12 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             Log.d(TAG, "myBuild $build")
         }
         checkCreatePermissions()
-        CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback)
+        //CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback)
+        if (OpenCVLoader.initDebug()) {
+            checkResumePermissions();
+        } else {
+            throw RuntimeException("Failed to initialize OpenCV");
+        }
         //TODO these should go in the variable's creation
         mImageThread = HandlerThread("Worker Thread")
         mImageThread.start()
