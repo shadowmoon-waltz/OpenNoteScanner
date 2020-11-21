@@ -208,9 +208,8 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     private fun checkCreatePermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (!Utils.hasStoragePerm(this, true) &&
+                !ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                     MY_PERMISSIONS_REQUEST_WRITE)
         }
@@ -669,7 +668,8 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             isIntent = true
         } else {
             val folderName = mSharedPref.getString("storage_folder", "OpenNoteScanner")
-            val folder = File(Environment.getExternalStorageDirectory().toString(), "/$folderName")
+            val hasPerm = Utils.hasStoragePerm(this, true)
+            val folder = File((if (hasPerm) Environment.getExternalStorageDirectory() else getFilesDir()).toString(), "/$folderName")
             if (!folder.exists()) {
                 folder.mkdirs()
                 Log.d(TAG, "wrote: created folder " + folder.path)
@@ -736,7 +736,8 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     private fun createFileName(imgSuffix: String, folderName: String?): String {
         var fileName: String
-        fileName = (Environment.getExternalStorageDirectory().toString()
+        val hasPerm = Utils.hasStoragePerm(this, true)
+        fileName = ((if (hasPerm) Environment.getExternalStorageDirectory() else getFilesDir()).toString()
                 + "/" + folderName + "/")
         if (scanTopic != null) {
             fileName += "$scanTopic-"

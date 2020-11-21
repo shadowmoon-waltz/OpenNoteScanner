@@ -62,7 +62,9 @@ class FullScreenImageAdapter(
         */
 
         // imgDisplay.setImageBitmap(bitmap);
-        mImageLoader!!.displayImage("file:///$imagePath", imgDisplay, mTargetSize)
+        // mImageLoader!!.displayImage("file:///$imagePath", imgDisplay, mTargetSize)
+        mImageLoader!!.displayImage(if (imagePath.startsWith("content://")) imagePath else "file:///$imagePath",
+                imgDisplay, mTargetSize);
         container.addView(viewLayout)
         return viewLayout
     }

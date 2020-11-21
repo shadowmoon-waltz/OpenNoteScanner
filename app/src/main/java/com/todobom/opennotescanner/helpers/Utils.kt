@@ -1,5 +1,6 @@
 package com.todobom.opennotescanner.helpers
 
+import android.Manifest
 import android.content.ContentValues
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,6 +12,7 @@ import android.os.Environment
 import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import java.io.File
 import java.util.*
 import java.util.regex.Pattern
@@ -29,18 +31,40 @@ class Utils(
     val filePaths: ArrayList<String>
         get() {
             val filePaths = ArrayList<String>()
-            val directory = File(
+            
+            val hasPerm = hasStoragePerm(_context, false)
+            var listFiles:Array<File>? = null
+            
+            if (hasPerm) {
+                val directory = File(
                     Environment.getExternalStorageDirectory()
+                                .toString() + File.separator + mSharedPref.getString("storage_folder", "OpenNoteScanner"))
+
+                if (directory.isDirectory) {
+                    // getting list of file paths
+                    listFiles = directory.listFiles();
+                }
+            }
+
+            val directory = File(
+                    _context.getFilesDir()
                             .toString() + File.separator + mSharedPref.getString("storage_folder", "OpenNoteScanner"))
 
             // check for directory
             if (directory.isDirectory) {
-                // getting list of file paths
-                val listFiles = directory.listFiles()
+                if (listFiles == null || listFiles.size == 0) {
+                    listFiles = directory.listFiles()
+                } else {
+                    val listFiles2 = directory.listFiles()
+                    if (listFiles2.size > 0) {
+                        listFiles = arrayOf(*listFiles, *listFiles2)
+                    }
+                }
+
                 Arrays.sort(listFiles) { f1, f2 -> f2.name.compareTo(f1.name) }
 
                 // Check for count
-                if (listFiles.size > 0) {
+                if (listFiles?.isNotEmpty() == true) {
 
                     // loop through all files
                     for (i in listFiles.indices) {
@@ -204,6 +228,12 @@ class Utils(
                 false
             }
             return app_installed
+        }
+
+        @JvmStatic
+        fun hasStoragePerm(context: Context, write: Boolean): Boolean {
+            return (ContextCompat.checkSelfPermission(context, if (write) Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    else Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
         }
     }
 

@@ -31,9 +31,10 @@ object PdfHelper {
         val outputFile = ("PDF-"
                 + SimpleDateFormat("yyyyMMdd-HHmmss").format(Date()) + ".pdf")
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        val hasPerm = Utils.hasStoragePerm(applicationContext, true)
         val pdfFilePath = File(
-                Environment.getExternalStorageDirectory()
-                        .toString() + File.separator + sharedPreferences.getString("storage_folder", "OpenNoteScanner"), outputFile)
+                (if (hasPerm) Environment.getExternalStorageDirectory() else applicationContext.getFilesDir())
+                          .toString() + File.separator + sharedPreferences.getString("storage_folder", "OpenNoteScanner"), outputFile)
                 .absolutePath
         var pdfWriter: PdfWriter? = null
         try {
