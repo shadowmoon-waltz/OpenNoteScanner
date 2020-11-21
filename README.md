@@ -1,3 +1,24 @@
+Fork (with somewhat minor changes) of [project of same name](https://github.com/ctodobom/OpenNoteScanner). Changes will be described in this section; other sections are from original readme and may not reflect fork changes.
+
+The license is unchanged (GPL-3.0 License).
+
+The functional changes include:
+- Use embedded opencv, which is maintained in the original project in the embedded opencv branch.
+- If you don't use storage permissions, it will write to internal storage (data partition) for extra privacy; there's no option for that, but it changes when the permission is granted or revoked. It will always show scans and allow you to share scans with other apps from both directories.
+- Remove the basic analytics in the app. This is simply a personal preference.
+
+Using release signing based on "gradle.properties" in your gradle config directory (which usually defaults to "~/.gradle").
+Add the following lines to that file `
+keystoreFile=C:\\somewhere\\key.jks
+keystorePassword=<keystore password>
+keystoreAlias=<key alias>
+keystoreAliasPassword=<key password>
+`
+
+I primarily build the fdroid version.
+
+---
+
 OpenNoteScanner
 ===============
 
