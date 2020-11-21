@@ -1,5 +1,6 @@
 package com.todobom.opennotescanner
 
+/*
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.preference.PreferenceManager
 import org.matomo.sdk.TrackerBuilder
@@ -7,10 +8,13 @@ import org.matomo.sdk.extra.DownloadTracker.Extra.ApkChecksum
 import org.matomo.sdk.extra.MatomoApplication
 import org.matomo.sdk.extra.TrackHelper
 import java.util.*
+*/
+import android.app.Application;
 
 /**
  * Created by allgood on 23/04/16.
  */
+/*
 class OpenNoteScannerApplication : MatomoApplication() {
     private var mOptOut = false
     private var mPreferenceChangeListener = OnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -64,4 +68,9 @@ class OpenNoteScannerApplication : MatomoApplication() {
         // Track this app install, this will only trigger once per app version.
         TrackHelper.track().download().identifier(ApkChecksum(this)).with(tracker)
     }
+}
+*/
+
+class OpenNoteScannerApplication : Application() {
+
 }

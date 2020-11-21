@@ -5,9 +5,9 @@ import android.graphics.Point
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
-import com.todobom.opennotescanner.OpenNoteScannerApplication
+//import com.todobom.opennotescanner.OpenNoteScannerApplication
 import com.todobom.opennotescanner.R
-import org.matomo.sdk.extra.TrackHelper
+//import org.matomo.sdk.extra.TrackHelper
 import us.feras.mdv.MarkdownView
 
 class AboutFragment : DialogFragment() {
@@ -41,8 +41,8 @@ class AboutFragment : DialogFragment() {
                 putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_app_subject))
                 putExtra(Intent.EXTRA_TEXT, shareBody)
             }
-            val tracker = (activity.application as OpenNoteScannerApplication).tracker
-            TrackHelper.track().screen("/shareapp").title("Share Application").with(tracker)
+            //val tracker = (activity.application as OpenNoteScannerApplication).tracker
+            //TrackHelper.track().screen("/shareapp").title("Share Application").with(tracker)
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_app_using)))
         }
     }

@@ -78,12 +78,12 @@
     <PreferenceCategory
         android:title="@string/feedback_and_contributions"
         android:persistent="false">
-        <CheckBoxPreference
+        <!--<CheckBoxPreference
             android:title="@string/usage_stats"
             android:defaultValue="false"
             android:key="usage_stats"
             android:summary="@string/usage_stats_summary"
-            />
+            />-->
         <Preference
             android:title="@string/github_project"
             android:summary="@string/github_project_summary"

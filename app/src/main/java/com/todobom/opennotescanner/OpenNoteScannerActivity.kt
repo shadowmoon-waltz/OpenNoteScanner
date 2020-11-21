@@ -34,8 +34,8 @@ import com.google.android.material.navigation.NavigationView
 import com.todobom.opennotescanner.helpers.*
 import com.todobom.opennotescanner.helpers.ScanTopicDialogFragment.SetTopicDialogListener
 import com.todobom.opennotescanner.views.HUDCanvasView
-import org.matomo.sdk.Tracker
-import org.matomo.sdk.extra.TrackHelper
+//import org.matomo.sdk.Tracker
+//import org.matomo.sdk.extra.TrackHelper
 import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.OpenCVLoader
 import org.opencv.core.Core
@@ -94,7 +94,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     private val mDateFormat = SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
     private var scanTopic: String? = null
     private var mat: Mat? = null
-    private lateinit var tracker: Tracker
+    //private lateinit var tracker: Tracker
 
     fun setImageProcessorBusy(imageProcessorBusy: Boolean) {
         this.imageProcessorBusy = imageProcessorBusy
@@ -110,11 +110,11 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         super.onCreate(savedInstanceState)
         mThis = this
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        if (mSharedPref.getBoolean("isFirstRun", true) && !mSharedPref.getBoolean("usage_stats", false)) {
-            statsOptInDialog()
-        }
-        tracker = (application as OpenNoteScannerApplication).tracker
-        TrackHelper.track().screen("/OpenNoteScannerActivity").title("Main Screen").with(tracker)
+        //if (mSharedPref.getBoolean("isFirstRun", true) && !mSharedPref.getBoolean("usage_stats", false)) {
+        //    statsOptInDialog()
+        //}
+        //tracker = (application as OpenNoteScannerApplication).tracker
+        //TrackHelper.track().screen("/OpenNoteScannerActivity").title("Main Screen").with(tracker)
         setContentView(R.layout.activity_open_note_scanner)
         mVisible = true
         mControlsView = findViewById(R.id.fullscreen_content_controls)
@@ -730,7 +730,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         }
 
         // Record goal "PictureTaken"
-        TrackHelper.track().event("Picture", "PictureTaken").with(tracker)
+        //TrackHelper.track().event("Picture", "PictureTaken").with(tracker)
         refreshCamera()
     }
 
@@ -770,6 +770,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         return false
     }
 
+    /*
     private fun statsOptInDialog() {
         val statsOptInDialog = AlertDialog.Builder(this)
         statsOptInDialog.setTitle(getString(R.string.stats_optin_title))
@@ -787,6 +788,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         statsOptInDialog.setNeutralButton(R.string.answer_later) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
         statsOptInDialog.create().show()
     }
+    */
 
     companion object {
         /**
